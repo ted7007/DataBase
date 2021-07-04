@@ -20,9 +20,23 @@ namespace DataBase
     /// </summary>
     public partial class MainWindow : Window
     {
+        Departament DB;
         public MainWindow()
         {
             InitializeComponent();
+
+            DB = new Departament();
+            DB.AddDepartament(Departament.GenerateNewDataBase("DataBase", 20, 10));
+            Departaments.ItemsSource = DB.Departaments;
+            Departaments.SelectedItemChanged += Departaments_SelectedItemChanged;
+        }
+
+        private void Departaments_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            TreeView tree = sender as TreeView;
+            Departament dep = tree.SelectedItem as Departament;
+            Workers.ItemsSource = dep.Workers.ToArray();
+            Workers.Items.Refresh();
         }
     }
 }

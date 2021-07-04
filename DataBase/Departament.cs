@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace DataBase
     {
         #region static
         static private uint count;
-        static public List<Departament> allDepartaments;
+        static public ObservableCollection<Departament> allDepartaments;
 
         static public uint Count { get { return count; } }
         static Departament()
@@ -21,7 +22,7 @@ namespace DataBase
         static public void Init()
         {
             Departament.count = 0;
-            Departament.allDepartaments = new List<Departament>();
+            Departament.allDepartaments = new ObservableCollection<Departament>();
             Worker.Init();
         }
         /// <summary>
@@ -59,7 +60,6 @@ namespace DataBase
         static public Departament GenerateNewDataBase(string name, int maxCountDep, int maxCountWorkers)
         {
             Random rnd = new Random();
-            Departament.Init();
             Departament DataBase = new Departament("DataBase");
             int countDep = rnd.Next(maxCountDep), countWorkers = rnd.Next(maxCountWorkers);
             for(int i = 0; i < countDep; i++)
@@ -67,19 +67,19 @@ namespace DataBase
                 int newCountDep = rnd.Next(countDep), newCountWorkers = rnd.Next(countWorkers);
                 DataBase.AddDepartament(Departament.GenerateDepartament(newCountDep, newCountWorkers));
             }
-
-            for(int i = 0; i < countWorkers; i++)
-            {
-                switch(rnd.Next(2))
-                {
-                    case 0:
-                        DataBase.AddWorker(new Intern(DataBase.Id));
-                        break;
-                    case 1:
-                        DataBase.AddWorker(new Member(DataBase.Id));
-                        break;
-                }
-            }
+            // Убрал генерацию работников в БД, тк там хранятся только департаменты.
+            //for(int i = 0; i < countWorkers; i++)
+            //{
+            //    switch(rnd.Next(2))
+            //    {
+            //        case 0:
+            //            DataBase.AddWorker(new Intern(DataBase.Id));
+            //            break;
+            //        case 1:
+            //            DataBase.AddWorker(new Member(DataBase.Id));
+            //            break;
+            //    }
+            //}
             return DataBase;
         }
 
@@ -125,9 +125,9 @@ namespace DataBase
 
         private string idDirector;
 
-        private List<Worker> workers;
+        private ObservableCollection<Worker> workers;
 
-        private List<Departament> departaments;
+        private ObservableCollection<Departament> departaments;
 
         #endregion
 
@@ -139,9 +139,9 @@ namespace DataBase
 
         public string IdDirector { get { return idDirector; } }
 
-        public List<Worker> Workers { get { return workers; } }
+        public ObservableCollection<Worker> Workers { get { return workers; } }
 
-        public List<Departament> Departaments { get { return departaments; } }
+        public ObservableCollection<Departament> Departaments { get { return departaments; } }
 
         #endregion
 
@@ -151,8 +151,8 @@ namespace DataBase
         {
             name = Name;
             id = Convert.ToString(Departament.GetNext());
-            workers = new List<Worker>();
-            departaments = new List<Departament>();
+            workers = new ObservableCollection<Worker>();
+            departaments = new ObservableCollection<Departament>();
             allDepartaments.Add(this);
 
             Director dir = new Director(Id);
