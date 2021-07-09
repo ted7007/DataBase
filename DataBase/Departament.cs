@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,11 +9,11 @@ using DataBase.Workers;
 
 namespace DataBase
 {
-    class Departament
+    class Departament : IEnumerable
     {
         #region static
         static private uint count;
-        static public List<Departament> allDepartaments;
+        static public ObservableCollection<Departament> allDepartaments;
 
         static public uint Count { get { return count; } }
         static Departament()
@@ -21,7 +23,7 @@ namespace DataBase
         static public void Init()
         {
             Departament.count = 0;
-            Departament.allDepartaments = new List<Departament>();
+            Departament.allDepartaments = new ObservableCollection<Departament>();
             Worker.Init();
         }
         /// <summary>
@@ -59,27 +61,26 @@ namespace DataBase
         static public Departament GenerateNewDataBase(string name, int maxCountDep, int maxCountWorkers)
         {
             Random rnd = new Random();
-            Departament.Init();
-            Departament DataBase = new Departament("DataBase");
+            Departament DataBase = new Departament("DataBase", "-1");
             int countDep = rnd.Next(maxCountDep), countWorkers = rnd.Next(maxCountWorkers);
             for(int i = 0; i < countDep; i++)
             {
                 int newCountDep = rnd.Next(countDep), newCountWorkers = rnd.Next(countWorkers);
-                DataBase.AddDepartament(Departament.GenerateDepartament(newCountDep, newCountWorkers));
+                DataBase.AddDepartament(Departament.GenerateDepartament(newCountDep, newCountWorkers,DataBase.Id));
             }
-
-            for(int i = 0; i < countWorkers; i++)
-            {
-                switch(rnd.Next(2))
-                {
-                    case 0:
-                        DataBase.AddWorker(new Intern(DataBase.Id));
-                        break;
-                    case 1:
-                        DataBase.AddWorker(new Member(DataBase.Id));
-                        break;
-                }
-            }
+            // Убрал генерацию работников в БД, тк там хранятся только департаменты.
+            //for(int i = 0; i < countWorkers; i++)
+            //{
+            //    switch(rnd.Next(2))
+            //    {
+            //        case 0:
+            //            DataBase.AddWorker(new Intern(DataBase.Id));
+            //            break;
+            //        case 1:
+            //            DataBase.AddWorker(new Member(DataBase.Id));
+            //            break;
+            //    }
+            //}
             return DataBase;
         }
 
@@ -89,15 +90,15 @@ namespace DataBase
         /// <param name="maxCountDep">максимальное число депратаментов в случайном департаменте</param>
         /// <param name="maxCountWorkers">максимальное число работников в случайном департаменте</param>
         /// <returns></returns>
-        static public Departament GenerateDepartament(int maxCountDep, int maxCountWorkers)
+        static public Departament GenerateDepartament(int maxCountDep, int maxCountWorkers, string parrentId)
         {
             Random rnd = new Random();
-            Departament dep = new Departament();
+            Departament dep = new Departament(parrentId);
             int countDep = rnd.Next( maxCountDep), countWorkers = rnd.Next(maxCountWorkers);
             for (int i = 0; i < countDep; i++)
             {
                 int newCountDep = rnd.Next(countDep), newCountWorkers = rnd.Next(countWorkers);
-                dep.AddDepartament(Departament.GenerateDepartament(newCountDep, newCountWorkers));
+                dep.AddDepartament(Departament.GenerateDepartament(newCountDep, newCountWorkers,dep.Id));
             }
 
             for (int i = 0; i < countWorkers; i++)
@@ -125,9 +126,11 @@ namespace DataBase
 
         private string idDirector;
 
-        private List<Worker> workers;
+        private ObservableCollection<Worker> workers;
 
-        private List<Departament> departaments;
+        private ObservableCollection<Departament> departaments;
+
+        private string parrentId;
 
         #endregion
 
@@ -139,28 +142,31 @@ namespace DataBase
 
         public string IdDirector { get { return idDirector; } }
 
-        public List<Worker> Workers { get { return workers; } }
+        public ObservableCollection<Worker> Workers { get { return workers; } }
 
-        public List<Departament> Departaments { get { return departaments; } }
+        public ObservableCollection<Departament> Departaments { get { return departaments; } }
+
+        public string ParrentId { get { return parrentId; } }
 
         #endregion
 
         #region ctors
 
-        public Departament(string Name)
+        public Departament(string Name, string ParrentId)
         {
             name = Name;
             id = Convert.ToString(Departament.GetNext());
-            workers = new List<Worker>();
-            departaments = new List<Departament>();
+            workers = new ObservableCollection<Worker>();
+            departaments = new ObservableCollection<Departament>();
             allDepartaments.Add(this);
+            parrentId = ParrentId;
 
             Director dir = new Director(Id);
             idDirector = dir.Id;
             AddWorker(dir);
         }
 
-        public Departament() : this("Departament " + Departament.Count)
+        public Departament(string ParrentId) : this("Departament " + Departament.Count, ParrentId)
         {
 
         }
@@ -168,6 +174,18 @@ namespace DataBase
         #endregion 
 
         #region methods
+
+        /// <summary>
+        /// Метод необходимый для интерфейса IEnumerable. В дальнейшем помогает при сортировке.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator GetEnumerator()
+        {
+            for(int i = 0; i < Workers.Count; i++)
+            {
+                yield return Workers[i];
+            }
+        }
 
         /// <summary>
         /// Метод, добавляющий новый департамент
@@ -190,7 +208,45 @@ namespace DataBase
             Worker.Find(IdDirector).CalculateSalary();
         }
 
+        /// <summary>
+        /// Метод сортировки списка работников
+        /// </summary>
+        /// <param name="propToCompare">Свойства, по которым следует сортировать список.
+        ///                             Age - по возрасту,
+        ///                             Salary - по зарплате,
+        ///                             AgeAndSalary - по возрасту и зарплате.</param>
+        /// <param name="isReverse">Флаг обратного порядка, при значении true - сортирует в обратном порядке.</param>
+        public void SortWorkers(PropertiesToCompare propToCompare, bool isReverse = false)
+        {
+            Worker[] workers2 = new Worker[workers.Count];
+            workers.CopyTo(workers2,0);
+            Array.Sort(workers2, new WorkerComparer(propToCompare));
+            if(isReverse)
+                Array.Reverse(workers2);
+            workers.Clear();
+            foreach(var i in workers2)
+            {
+                workers.Add(i);
+            }
+            
+        }
 
+        public void Delete()
+        {
+            if (this.Id != "1") 
+                Departament.Find(ParrentId).departaments.Remove(Departament.Find(this.Id));
+        }
+
+        public void DeleteWorker(string id)
+        {
+            for(int i = 0; i < Workers.Count; i++)
+            {
+                if(Workers[i].Id == id)
+                {
+                    Workers.Remove(Workers[i]);
+                }    
+            }
+        }
         #endregion
     }
 }
