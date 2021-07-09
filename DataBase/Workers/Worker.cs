@@ -15,7 +15,7 @@ namespace DataBase
 
         static public ObservableCollection<Worker> allWorkers;
 
-        static public uint Count { get {  return count;} }
+        static public uint Count { get { return count; } }
 
         static Worker()
         {
@@ -26,7 +26,7 @@ namespace DataBase
             Worker.count = 0;
             Worker.allWorkers = new ObservableCollection<Worker>();
         }
-        
+
         /// <summary>
         /// Метод, возвращающий номер следующего сотрудника.
         /// </summary>
@@ -58,7 +58,7 @@ namespace DataBase
 
         protected byte age;
 
-        protected uint salary;
+        protected int salary;
 
         protected string idDepartament;
 
@@ -72,17 +72,28 @@ namespace DataBase
 
         public byte Age { get { return age; } }
 
-        public uint Salary { get { return salary; } }
+        public int Salary { get { return salary; } set { salary = value; } }
 
         public string IdDepartament { get { return idDepartament; } }
+
+        public string Rank { get { return this.Print(); } }
+
+
 
         #endregion
 
         #region methods
 
         public abstract void CalculateSalary();
+        public abstract string Print();
 
-
+        public void Delete()
+        {
+            var dep = Departament.Find(IdDepartament);
+            if (dep is null)
+                return;
+            dep.DeleteWorker(Id);
+        }
         #endregion
 
     }

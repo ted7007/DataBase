@@ -26,8 +26,8 @@ namespace DataBase.Workers
 
         public override void CalculateSalary()
         {
-            uint depSalary = GetAllSalary(idDepartament);
-            salary = Convert.ToUInt32(depSalary * 0.15) < 1000? 1000: Convert.ToUInt32(depSalary * 0.15);
+            int depSalary = GetAllSalary(idDepartament);
+            salary = Convert.ToInt32((depSalary * 0.15)) < 1000? 1000: Convert.ToInt32((depSalary * 0.15));
 
         }
         
@@ -36,9 +36,9 @@ namespace DataBase.Workers
         /// </summary>
         /// <param name="IdDepartament"></param>
         /// <returns></returns>
-        private uint GetAllSalary(string IdDepartament)
+        private int GetAllSalary(string IdDepartament)
         {
-            uint result = 0;
+            int result = 0;
             Departament dep = Departament.Find(IdDepartament);
             foreach (var i in dep.Workers)
             {
@@ -52,6 +52,8 @@ namespace DataBase.Workers
             return result;
             
         }
-        
+
+        public override string Print() => "Director";
+
     }
 }

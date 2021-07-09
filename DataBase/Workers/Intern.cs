@@ -31,5 +31,9 @@ namespace DataBase.Workers
         {
             salary = 1000;
         }
+
+        public override string Print() => "Intern";
+
+
     }
 }

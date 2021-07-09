@@ -30,7 +30,10 @@ namespace DataBase.Workers
         /// </summary>
         public override void CalculateSalary()
         {
-            salary = 15;
+            salary = 30 * 40;
         }
+
+        public override string Print() =>  "Member";
+
     }
 }

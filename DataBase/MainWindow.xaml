@@ -39,19 +39,18 @@
                                    Margin="5"
                                    Padding="5"/>
 
-                        <TextBlock Text="{Binding Path=Id}"
-                                   Margin="5"
-                                   Padding="5"/>
                         
                         <Button x:Name="AddDepartament"
                                 Content="+"
                                 Margin="5"
-                                Padding ="5"/>
+                                Padding ="5"
+                                Click="AddDepartament_Click"/>
                         
                         <Button x:Name="RemoveDepartament"
                                 Content="X"
                                 Margin="5"
                                 Padding ="5"
+                                Click="RemoveDepartament_Click"
                                 />
 
                     </StackPanel>
@@ -67,10 +66,12 @@
                   Grid.Column="0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="5">
-                        <TextBlock Text="{Binding StringFormat=Имя {0}, Path=FullName }"/>
-                        <TextBlock Text="{Binding StringFormat=Возраст: {0}, Path=Age}"/>
+                    <StackPanel Margin="5" Orientation="Vertical">
+                        <TextBlock Text="{Binding StringFormat=Должность {0}, Path=Rank}" />
+                        <TextBlock Text="{Binding StringFormat=Имя {0}, Path=FullName }" />
+                        <TextBlock Text="{Binding StringFormat=Возраст: {0}, Path=Age}" />
                         <TextBlock Text="{Binding StringFormat=Зарплата: {0}, Path=Salary}"/>
+                        <Button x:Name="RemoveWorkerButton" Content="Remove" Margin="5" Click="RemoveWorker_Click"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -80,9 +81,9 @@
                     Grid.Row="1"
                     Grid.Column="0">
             <Button x:Name="AddWorker"
-                    Content="Add Worker"/>
+                    Content="Add Worker" Click="AddWorker_Click"/>
             <Button x:Name="SortWorkers"
-                    Content="Sort Workers"/>
+                    Content="Sort Workers" Click="SortWorkers_Click"/>
         </StackPanel>
         
     </Grid>

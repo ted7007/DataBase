@@ -55,11 +55,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddDepartamentWindow.xaml.cs">
+      <DependentUpon>AddDepartamentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddWorkerWindow.xaml.cs">
+      <DependentUpon>AddWorkerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Departament.cs" />
+    <Compile Include="SortConfig.xaml.cs">
+      <DependentUpon>SortConfig.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Workers\Director.cs" />
     <Compile Include="Workers\Intern.cs" />
     <Compile Include="Workers\Member.cs" />
     <Compile Include="Workers\Worker.cs" />
+    <Compile Include="Workers\WorkerComparer.cs" />
+    <Page Include="AddDepartamentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddWorkerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -72,6 +90,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SortConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
