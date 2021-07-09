@@ -12,22 +12,35 @@ namespace DataBase
     class Departament : IEnumerable
     {
         #region static
+
+        #region static fields
         static private uint count;
+
         static public ObservableCollection<Departament> allDepartaments;
+        #endregion
+
+        #region static Properties
 
         static public uint Count { get { return count; } }
+
+        #endregion
         static Departament()
         {
             Init();
         }
-        static public void Init()
+
+        /// <summary>
+        /// Метод инициализации статических полей
+        /// </summary>
+        static private void Init()
         {
             Departament.count = 0;
             Departament.allDepartaments = new ObservableCollection<Departament>();
             Worker.Init();
         }
+
         /// <summary>
-        /// Метод, который возвращает uint индекс департамента и передвигающий счётчик дальше.
+        /// Метод, который возвращает uint индекс департамента, и передвигает счётчик дальше.
         /// </summary>
         /// <returns></returns>
         static public uint GetNext()
@@ -51,6 +64,7 @@ namespace DataBase
             }
             return null;
         }
+
         /// <summary>
         /// Генерация новой базы данных. Этот метод обнуляет статические поля
         /// </summary>
@@ -68,19 +82,6 @@ namespace DataBase
                 int newCountDep = rnd.Next(countDep), newCountWorkers = rnd.Next(countWorkers);
                 DataBase.AddDepartament(Departament.GenerateDepartament(newCountDep, newCountWorkers,DataBase.Id));
             }
-            // Убрал генерацию работников в БД, тк там хранятся только департаменты.
-            //for(int i = 0; i < countWorkers; i++)
-            //{
-            //    switch(rnd.Next(2))
-            //    {
-            //        case 0:
-            //            DataBase.AddWorker(new Intern(DataBase.Id));
-            //            break;
-            //        case 1:
-            //            DataBase.AddWorker(new Member(DataBase.Id));
-            //            break;
-            //    }
-            //}
             return DataBase;
         }
 
@@ -231,12 +232,19 @@ namespace DataBase
             
         }
 
+        /// <summary>
+        /// Метод удаления текущего департамента
+        /// </summary>
         public void Delete()
         {
             if (this.Id != "1") 
                 Departament.Find(ParrentId).departaments.Remove(Departament.Find(this.Id));
         }
 
+        /// <summary>
+        /// Метод удаления работника
+        /// </summary>
+        /// <param name="id"></param>
         public void DeleteWorker(string id)
         {
             for(int i = 0; i < Workers.Count; i++)

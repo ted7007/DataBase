@@ -54,7 +54,7 @@ namespace DataBase
             }
             else
             {
-                MessageBox.Show("ошибка сортировки");
+                MessageBox.Show("sort error");
             }
 
         }
@@ -66,7 +66,7 @@ namespace DataBase
                     return;
             AddWorkerWindow addwindow = new AddWorkerWindow();
 
-            if(addwindow.ShowDialog() == true)
+            if(addwindow.ShowDialog() == true && int.Parse(addwindow.AgeStr)>17)
             {
                 
                 string nameworker = addwindow.NameStr; byte ageworker = Convert.ToByte(addwindow.AgeStr);
@@ -82,7 +82,7 @@ namespace DataBase
             }
             else
             {
-                MessageBox.Show("Работник не был добавлен");
+                MessageBox.Show("Worker wasnt added");
                 return;
             }
         }

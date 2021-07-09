@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:DataBase"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="Button"/>
+    </Window.Resources>
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60*"/>
             <ColumnDefinition Width="Auto"/>
@@ -16,7 +20,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="80*"/>
-            <RowDefinition Height="20*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <GridSplitter   Width="5"
@@ -27,7 +31,7 @@
                         HorizontalAlignment="Center"/>
 
         <TreeView x:Name="Departaments"
-                  Grid.Row="0"
+                  Grid.Row="0" Grid.RowSpan="2"
                   Grid.Column="2"
                   Margin="5">
             <TreeView.ItemTemplate>
@@ -67,8 +71,8 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5" Orientation="Vertical">
-                        <TextBlock Text="{Binding StringFormat=Должность {0}, Path=Rank}" />
-                        <TextBlock Text="{Binding StringFormat=Имя {0}, Path=FullName }" />
+                        <TextBlock Text="{Binding StringFormat=Должность: {0}, Path=Rank}" />
+                        <TextBlock Text="{Binding StringFormat=Имя: {0}, Path=FullName }" />
                         <TextBlock Text="{Binding StringFormat=Возраст: {0}, Path=Age}" />
                         <TextBlock Text="{Binding StringFormat=Зарплата: {0}, Path=Salary}"/>
                         <Button x:Name="RemoveWorkerButton" Content="Remove" Margin="5" Click="RemoveWorker_Click"/>
@@ -80,10 +84,14 @@
         <StackPanel x:Name="WorkersUI"
                     Grid.Row="1"
                     Grid.Column="0">
-            <Button x:Name="AddWorker"
-                    Content="Add Worker" Click="AddWorker_Click"/>
+            <Border CornerRadius="3">
+                <Button x:Name="AddWorker"
+                    Content="Add Worker" Click="AddWorker_Click"
+                    />
+            </Border>
             <Button x:Name="SortWorkers"
-                    Content="Sort Workers" Click="SortWorkers_Click"/>
+                    Content="Sort Workers" Click="SortWorkers_Click"
+                      />
         </StackPanel>
         
     </Grid>

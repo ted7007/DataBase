@@ -85,6 +85,7 @@ namespace DataBase
         #region methods
 
         public abstract void CalculateSalary();
+
         public abstract string Print();
 
         public void Delete()
