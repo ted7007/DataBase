@@ -19,21 +19,10 @@ namespace DataBase
     /// </summary>
     public partial class AddDepartamentWindow : Window
     {
-        public string NewName { get; private set; }
         public AddDepartamentWindow()
         {
             InitializeComponent();
-        }
-
-        public void AcceptButtonClick(object sender, RoutedEventArgs e)
-        {
-            if(String.IsNullOrEmpty(NameBox.Text))
-            {
-                MessageBox.Show("Input correct Departament's Name");
-                return;
-            }
-            NewName = NameBox.Text;
-            this.DialogResult = true;
+            this.DataContext = new AddDepartamentVM();
         }
     }
 }

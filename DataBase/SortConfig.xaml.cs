@@ -20,34 +20,12 @@ namespace DataBase
     /// </summary>
     public partial class SortConfig : Window
     {
-        public PropertiesToCompare PropertiesToSort { get; private set; }
-
-        public bool IsReverse { get; private set; }
 
         public SortConfig()
         {
             InitializeComponent();
-            SortPropertiesBox.ItemsSource = new string[] { "Age", "Salary", "AgeAndSalary" };
-            SortPropertiesBox.SelectedItem = SortPropertiesBox.Items[0];
-        }
 
-        private void AcceptButton_Click(object sender, RoutedEventArgs e)
-        {
-            switch(SortPropertiesBox.SelectedItem as string)
-            {
-                case "Age":
-                    PropertiesToSort = PropertiesToCompare.Age;
-                    break;
-                case "Salary":
-                    PropertiesToSort = PropertiesToCompare.Salary;
-                    break;
-                case "AgeAndSalary":
-                    PropertiesToSort = PropertiesToCompare.AgeAndSalary;
-                    break;
-
-            }
-            IsReverse = IsReverseBox.IsChecked.Value;
-            this.DialogResult = true;        
+            this.DataContext = new SortConfigVM();
         }
     }
 }

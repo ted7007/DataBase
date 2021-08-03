@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="SortConfig" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen"
         MinWidth="200" MinHeight="100">
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20*"/>
@@ -25,17 +26,26 @@
         <ComboBox x:Name="SortPropertiesBox"
                   Grid.Column="1" Grid.ColumnSpan="3"
                   Grid.Row="0"
-                  Margin="10"/>
-        
+                  Margin="10" 
+                  SelectedItem="{Binding PropertiesToSortString}"
+                  SelectedIndex="0"
+                  >
+            <ComboBoxItem Content="Age"/>
+            <ComboBoxItem Content="Salary"/>
+            <ComboBoxItem Content="Age and Salary"/>
+        </ComboBox>
+
         <CheckBox x:Name="IsReverseBox"
-                  IsChecked="False"
                   Grid.Column="1" Grid.ColumnSpan="3"
                   Grid.Row="1"
                   Content="IsReverse"
-                  Margin="10"/>
+                  Margin="10"
+                  IsChecked="{Binding IsReverse}"
+                  />
         
-        <Button x:Name="AcceptButton" IsDefault="true" Content="OK" Margin="5"
-                Grid.Column="1" Grid.Row="2" Click="AcceptButton_Click"/>
+        <Button x:Name="AcceptButton" IsDefault="True" Content="OK" Margin="5"
+                Grid.Column="1" Grid.Row="2" Command="{Binding AcceptButtonClick}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
         <Button x:Name="CancelButton" IsCancel="true" Content="Cancel" Margin="5"
                 Grid.Column="3" Grid.Row="2"/>
         

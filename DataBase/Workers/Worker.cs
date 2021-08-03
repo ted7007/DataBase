@@ -94,6 +94,7 @@ namespace DataBase
             if (dep is null)
                 return;
             dep.DeleteWorker(Id);
+            (Worker.Find(dep.IdDirector) as Workers.Director).CalculateSalary();
         }
         #endregion
 

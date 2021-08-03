@@ -19,38 +19,12 @@ namespace DataBase
     /// </summary>
     public partial class AddWorkerWindow : Window
     {
-        public string AgeStr { get; private set; }
-
-        public string NameStr { get; private set; }
-
-        public string TypeOfWorkerStr { get; private set; }
+        
 
         public AddWorkerWindow()
         {
             InitializeComponent();
-            string[] typesOfWorker = new string[]{ "Intern","Member" };
-            TypeOfWorkerBox.ItemsSource = typesOfWorker;
-            TypeOfWorkerBox.SelectedItem = TypeOfWorkerBox.Items[0];
-        }
-
-        public void AcceptButtonClick(object sender, RoutedEventArgs e)
-        {
-            byte result;
-            if(String.IsNullOrEmpty(AgeBox.Text)|| !Byte.TryParse(AgeBox.Text, out result))
-            {
-                MessageBox.Show("Введите возраст!");
-                return;
-            }
-            if(String.IsNullOrEmpty(NameBox.Text))
-            {
-                MessageBox.Show("Введите имя!");
-                return;
-            }
-
-            AgeStr = AgeBox.Text;
-            NameStr = NameBox.Text;
-            TypeOfWorkerStr = TypeOfWorkerBox.SelectedItem as string;
-            this.DialogResult = true;
+            this.DataContext = new AddWorkerWindowVM();
         }
     }
 }

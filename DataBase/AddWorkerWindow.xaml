@@ -26,11 +26,14 @@
         <StackPanel Grid.Row="0" Grid.RowSpan="4"
                     Grid.Column="1" Grid.ColumnSpan="3">
             <Label Content="Input Worker's type"/>
-            <ComboBox Name="TypeOfWorkerBox" Margin="5"/>
+            <ComboBox Name="TypeOfWorkerBox" Margin="5" SelectedItem="{Binding TypeOfWorkerStr}">
+                <ComboBoxItem Content="Intern"/>
+                <ComboBoxItem Content="Member"/>
+            </ComboBox>
             <Label Content="Input Worker's fullname"/>
-            <TextBox Name ="NameBox" Margin="5"/>
+            <TextBox Name ="NameBox" Margin="5" Text="{Binding NameStr}"/>
             <Label Content="Input Worker's age"/>
-            <TextBox Name ="AgeBox" Margin="5"/>
+            <TextBox Name ="AgeBox" Margin="5" Text="{Binding AgeStr}"/>
         </StackPanel>
 
         <Button x:Name="AcceptButton"
@@ -38,7 +41,8 @@
                 Grid.Column="1"
                 Grid.Row="4"
                 Margin="3"
-                Click="AcceptButtonClick"/>
+                Command="{Binding AcceptButtonClick}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
 
         <Button x:Name="CancelButton"
                 Content="Cancel"

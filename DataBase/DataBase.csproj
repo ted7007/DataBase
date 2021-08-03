@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,16 +56,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddDepartamentVM.cs" />
     <Compile Include="AddDepartamentWindow.xaml.cs">
       <DependentUpon>AddDepartamentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="AddWorkerWindow.xaml.cs">
       <DependentUpon>AddWorkerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddWorkerWindowVM.cs" />
+    <Compile Include="ButtonCommand.cs" />
+    <Compile Include="DataBaseProvider.cs" />
     <Compile Include="Departament.cs" />
     <Compile Include="SortConfig.xaml.cs">
       <DependentUpon>SortConfig.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SortConfigVM.cs" />
     <Compile Include="Workers\Director.cs" />
     <Compile Include="Workers\Intern.cs" />
     <Compile Include="Workers\Member.cs" />

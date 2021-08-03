@@ -27,14 +27,16 @@
 
         <TextBox Name="NameBox"
                  Grid.Column="1" Grid.ColumnSpan="2"
-                 Grid.Row="1"/>
+                 Grid.Row="1"
+                 Text="{Binding NewName}"/>
 
         <Button x:Name="AcceptButtom"
                 Grid.Column="1"
                 Grid.Row="3" 
                 Margin="10"
                 Content="Ok"
-                Click="AcceptButtonClick"/>
+                Command="{Binding AcceptButtonCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
 
         <Button Name="CancelButton"
                 Grid.Column="2"
