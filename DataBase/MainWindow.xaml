@@ -29,14 +29,14 @@
                         Grid.RowSpan="2"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Center"/>
-
-        <TreeView x:Name="Departaments"
+        <local:ExtendedTreeView x:Name="Departaments"
                   Grid.Row="0" Grid.RowSpan="2"
                   Grid.Column="2"
                   Margin="5"
                   ItemsSource="{Binding DataBase.Departaments}"
-                  SelectedItemChanged="Departaments_SelectedItemChanged"
-                  >
+                  SelectedItem_="{Binding SelectedDepartament, Mode=TwoWay}"
+                 
+            >
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Path=Departaments}">
                     <StackPanel Orientation="Horizontal">
@@ -66,7 +66,7 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
 
-        </TreeView>
+        </local:ExtendedTreeView>
 
         <ListBox x:Name="Workers"
                   Margin="5"

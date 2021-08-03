@@ -67,6 +67,7 @@
     <Compile Include="ButtonCommand.cs" />
     <Compile Include="DataBaseProvider.cs" />
     <Compile Include="Departament.cs" />
+    <Compile Include="ExtendedTreeView.cs" />
     <Compile Include="SortConfig.xaml.cs">
       <DependentUpon>SortConfig.xaml</DependentUpon>
     </Compile>

@@ -26,10 +26,5 @@ namespace DataBase
             this.DataContext = new DataBaseProvider();
 
         }
-
-        private void Departaments_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            (this.DataContext as DataBaseProvider).SelectedDepartament = e.NewValue as Departament;
-        }
     }
 }
