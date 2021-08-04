@@ -55,6 +55,10 @@ namespace DataBase
                 return acceptButtonClick ??
                 (acceptButtonClick = new ButtonCommand(o =>
                 {
+                    if (PropertiesToSortString is null || String.IsNullOrEmpty(PropertiesToSortString.Content as string))
+                    {
+                        return;
+                    }
                     switch (PropertiesToSortString.Content as string)
                     {
                         case "Age":
@@ -68,11 +72,11 @@ namespace DataBase
                             break;
 
                     }
-                    if (!String.IsNullOrEmpty(PropertiesToSortString.Content as string))
-                    {
-                        Window wnd = o as Window;
-                        wnd.DialogResult = true; 
-                    }
+                    
+                    
+                    Window wnd = o as Window;
+                    wnd.DialogResult = true; 
+                    
                 }));
             }
         }
