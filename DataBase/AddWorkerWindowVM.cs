@@ -65,7 +65,7 @@ namespace DataBase
         public void AcceptButton_Click(object sender)
         {
             byte result;
-            if(String.IsNullOrWhiteSpace(TypeOfWorkerStr.Content as string))
+            if(TypeOfWorkerStr is null||String.IsNullOrWhiteSpace(TypeOfWorkerStr.Content as string))
             {
                 MessageBox.Show("Выберите должность!");
                 return;
